@@ -50,6 +50,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 	Route::get('/usermanagement', [UserManagementController::class, 'index'])->name('usermanagement')->middleware('auth');
+	Route::resource('roles',RolController::class)->middleware('auth');
+	Route::resource('usuarios',UsuarioController::class)->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -62,6 +64,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-	Route::resource('roles',RolController::class);
-	Route::resource('usuarios',UsuariosController::class);
+
 });
